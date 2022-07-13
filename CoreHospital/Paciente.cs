@@ -12,15 +12,18 @@ namespace CoreHospital
     using System;
     using System.Collections.Generic;
     
-    public partial class Doctor
+    public partial class Paciente
     {
-        public int ID_Doctor { get; set; }
+        public int ID_Paciente { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
-        public string Cedula { get; set; }
+        public int ID_Tipo_Documento { get; set; }
+        public string Documento { get; set; }
+        public string Pais { get; set; }
+        public string Ciudad { get; set; }
         public string Direccion { get; set; }
         public string Telefono { get; set; }
-        public int ID_Especialidad { get; set; }
-        public System.DateTime Fecha_Nacimiento { get; set; }
+        public string Correo { get; set; }
+        public System.DateTime Fecha__Nacimiento { get; set; }
     }
 }

@@ -18,8 +18,25 @@
           <Property Name="ID_Especialidad" Type="int" Nullable="false" />
           <Property Name="Fecha_Nacimiento" Type="date" Nullable="false" />
         </EntityType>
+        <EntityType Name="Paciente">
+          <Key>
+            <PropertyRef Name="ID_Paciente" />
+          </Key>
+          <Property Name="ID_Paciente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_Tipo_Documento" Type="int" Nullable="false" />
+          <Property Name="Documento" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="Pais" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ciudad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Correo" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Fecha _Nacimiento" Type="date" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="DbContextHospitalStoreContainer">
           <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Paciente" EntityType="Self.Paciente" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -40,7 +57,24 @@
         </EntityType>
         <EntityContainer Name="HOSPITALCOREPFEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Doctors" EntityType="Self.Doctor" />
+          <EntitySet Name="Pacientes" EntityType="DbContextHospital.Paciente" />
         </EntityContainer>
+        <EntityType Name="Paciente">
+          <Key>
+            <PropertyRef Name="ID_Paciente" />
+          </Key>
+          <Property Name="ID_Paciente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ID_Tipo_Documento" Type="Int32" Nullable="false" />
+          <Property Name="Documento" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
+          <Property Name="Pais" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Ciudad" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Correo" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Fecha__Nacimiento" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -58,6 +92,23 @@
                 <ScalarProperty Name="Telefono" ColumnName="Telefono" />
                 <ScalarProperty Name="ID_Especialidad" ColumnName="ID_Especialidad" />
                 <ScalarProperty Name="Fecha_Nacimiento" ColumnName="Fecha_Nacimiento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pacientes">
+            <EntityTypeMapping TypeName="DbContextHospital.Paciente">
+              <MappingFragment StoreEntitySet="Paciente">
+                <ScalarProperty Name="Fecha__Nacimiento" ColumnName="Fecha _Nacimiento" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Ciudad" ColumnName="Ciudad" />
+                <ScalarProperty Name="Pais" ColumnName="Pais" />
+                <ScalarProperty Name="Documento" ColumnName="Documento" />
+                <ScalarProperty Name="ID_Tipo_Documento" ColumnName="ID_Tipo_Documento" />
+                <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ID_Paciente" ColumnName="ID_Paciente" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

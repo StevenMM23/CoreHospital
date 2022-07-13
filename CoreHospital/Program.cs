@@ -15,13 +15,7 @@ namespace CoreHospital
             
             var d = new Doctor()
             { 
-                Nombre = "Steven",
-                Apellido = "Martinez",
-                Cedula = "234234245",
-                Direccion = "Caseldiablo",
-                Telefono = "8097285852",
-                ID_Especialidad = 8,
-                Fecha_Nacimiento = DateTime.Parse("2002/05/17")
+                
             };
 
             hospitalContext.Doctors.Add(d);

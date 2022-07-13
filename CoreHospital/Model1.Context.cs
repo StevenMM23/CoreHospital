@@ -26,5 +26,6 @@ namespace CoreHospital
         }
     
         public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Paciente> Pacientes { get; set; }
     }
 }
