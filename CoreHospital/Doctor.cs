@@ -12,9 +12,12 @@ namespace CoreHospital
     using System;
     using System.Collections.Generic;
     
+
+    
     public partial class Doctor
     {
         public int ID_Doctor { get; set; }
+        public int Suma { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Cedula { get; set; }
