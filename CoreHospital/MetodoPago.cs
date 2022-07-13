@@ -12,17 +12,16 @@ namespace CoreHospital
     using System;
     using System.Collections.Generic;
     
-    public partial class Doctor
+    public partial class MetodoPago
     {
-        public int ID_Doctor { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
-        public string Cedula { get; set; }
-        public string Direccion { get; set; }
-        public string Telefono { get; set; }
-        public int ID_Especialidad { get; set; }
-        public System.DateTime Fecha_Nacimiento { get; set; }
+        public MetodoPago()
+        {
+            this.Facturas = new HashSet<Factura>();
+        }
     
-        public virtual Especialidad Especialidad { get; set; }
+        public int ID_MetodoPago { get; set; }
+        public string Tipo { get; set; }
+    
+        public virtual ICollection<Factura> Facturas { get; set; }
     }
 }

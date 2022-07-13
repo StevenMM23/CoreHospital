@@ -18,25 +18,89 @@
           <Property Name="ID_Especialidad" Type="int" Nullable="false" />
           <Property Name="Fecha_Nacimiento" Type="date" Nullable="false" />
         </EntityType>
+        <EntityType Name="Especialidad">
+          <Key>
+            <PropertyRef Name="ID_Especialidad" />
+          </Key>
+          <Property Name="ID_Especialidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre_Especialidad" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="ID_factura" />
+          </Key>
+          <Property Name="ID_factura" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Precio" Type="float" Nullable="false" />
+          <Property Name="ID_MetodoPago" Type="int" Nullable="false" />
+          <Property Name="Articulo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SubTotal" Type="float" Nullable="false" />
+          <Property Name="Total" Type="float" Nullable="false" />
+          <Property Name="Tax" Type="float" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" Nullable="false" />
+          <Property Name="PrecioTotal" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MetodoPago">
+          <Key>
+            <PropertyRef Name="ID_MetodoPago" />
+          </Key>
+          <Property Name="ID_MetodoPago" Type="int" Nullable="false" />
+          <Property Name="Tipo" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Paciente">
           <Key>
             <PropertyRef Name="ID_Paciente" />
           </Key>
           <Property Name="ID_Paciente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Apellido" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ID_Tipo_Documento" Type="int" Nullable="false" />
           <Property Name="Documento" Type="nvarchar" MaxLength="12" Nullable="false" />
-          <Property Name="Pais" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Ciudad" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Direccion" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="Telefono" Type="nvarchar" MaxLength="10" Nullable="false" />
-          <Property Name="Correo" Type="nvarchar" MaxLength="40" Nullable="false" />
+          <Property Name="Pais" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ciudad" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Direccion" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Telefono" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="Correo" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="Fecha _Nacimiento" Type="date" Nullable="false" />
         </EntityType>
+        <Association Name="FK__Doctor__ID_Espec__30F848ED">
+          <End Role="Especialidad" Type="Self.Especialidad" Multiplicity="1" />
+          <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especialidad">
+              <PropertyRef Name="ID_Especialidad" />
+            </Principal>
+            <Dependent Role="Doctor">
+              <PropertyRef Name="ID_Especialidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Factura__ID_Meto__33D4B598">
+          <End Role="MetodoPago" Type="Self.MetodoPago" Multiplicity="1" />
+          <End Role="Factura" Type="Self.Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MetodoPago">
+              <PropertyRef Name="ID_MetodoPago" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="ID_MetodoPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="DbContextHospitalStoreContainer">
           <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Especialidad" EntityType="Self.Especialidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Factura" EntityType="Self.Factura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MetodoPago" EntityType="Self.MetodoPago" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Paciente" EntityType="Self.Paciente" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Doctor__ID_Espec__30F848ED" Association="Self.FK__Doctor__ID_Espec__30F848ED">
+            <End Role="Especialidad" EntitySet="Especialidad" />
+            <End Role="Doctor" EntitySet="Doctor" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Factura__ID_Meto__33D4B598" Association="Self.FK__Factura__ID_Meto__33D4B598">
+            <End Role="MetodoPago" EntitySet="MetodoPago" />
+            <End Role="Factura" EntitySet="Factura" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -54,10 +118,22 @@
           <Property Name="Telefono" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ID_Especialidad" Type="Int32" Nullable="false" />
           <Property Name="Fecha_Nacimiento" Type="DateTime" Precision="0" Nullable="false" />
+          <NavigationProperty Name="Especialidad" Relationship="DbContextHospital.FK__Doctor__ID_Espec__30F848ED" FromRole="Doctor" ToRole="Especialidad" />
         </EntityType>
         <EntityContainer Name="HOSPITALCOREPFEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Doctors" EntityType="Self.Doctor" />
           <EntitySet Name="Pacientes" EntityType="DbContextHospital.Paciente" />
+          <EntitySet Name="Especialidads" EntityType="DbContextHospital.Especialidad" />
+          <EntitySet Name="Facturas" EntityType="DbContextHospital.Factura" />
+          <EntitySet Name="MetodoPagoes" EntityType="DbContextHospital.MetodoPago" />
+          <AssociationSet Name="FK__Doctor__ID_Espec__30F848ED" Association="DbContextHospital.FK__Doctor__ID_Espec__30F848ED">
+            <End Role="Especialidad" EntitySet="Especialidads" />
+            <End Role="Doctor" EntitySet="Doctors" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Factura__ID_Meto__33D4B598" Association="DbContextHospital.FK__Factura__ID_Meto__33D4B598">
+            <End Role="MetodoPago" EntitySet="MetodoPagoes" />
+            <End Role="Factura" EntitySet="Facturas" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Paciente">
           <Key>
@@ -65,16 +141,72 @@
           </Key>
           <Property Name="ID_Paciente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ID_Tipo_Documento" Type="Int32" Nullable="false" />
           <Property Name="Documento" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="true" />
-          <Property Name="Pais" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Ciudad" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Telefono" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Correo" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="Pais" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Ciudad" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Telefono" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Correo" Type="String" Nullable="false" MaxLength="40" FixedLength="false" Unicode="false" />
           <Property Name="Fecha__Nacimiento" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
+        <EntityType Name="Especialidad">
+          <Key>
+            <PropertyRef Name="ID_Especialidad" />
+          </Key>
+          <Property Name="ID_Especialidad" Type="Int32" Nullable="false" />
+          <Property Name="Nombre_Especialidad" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Doctors" Relationship="DbContextHospital.FK__Doctor__ID_Espec__30F848ED" FromRole="Especialidad" ToRole="Doctor" />
+        </EntityType>
+        <EntityType Name="Factura">
+          <Key>
+            <PropertyRef Name="ID_factura" />
+          </Key>
+          <Property Name="ID_factura" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Precio" Type="Double" Nullable="false" />
+          <Property Name="ID_MetodoPago" Type="Int32" Nullable="false" />
+          <Property Name="Articulo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubTotal" Type="Double" Nullable="false" />
+          <Property Name="Total" Type="Double" Nullable="false" />
+          <Property Name="Tax" Type="Double" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PrecioTotal" Type="Double" Nullable="false" />
+          <NavigationProperty Name="MetodoPago" Relationship="DbContextHospital.FK__Factura__ID_Meto__33D4B598" FromRole="Factura" ToRole="MetodoPago" />
+        </EntityType>
+        <EntityType Name="MetodoPago">
+          <Key>
+            <PropertyRef Name="ID_MetodoPago" />
+          </Key>
+          <Property Name="ID_MetodoPago" Type="Int32" Nullable="false" />
+          <Property Name="Tipo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Facturas" Relationship="DbContextHospital.FK__Factura__ID_Meto__33D4B598" FromRole="MetodoPago" ToRole="Factura" />
+        </EntityType>
+        <Association Name="FK__Doctor__ID_Espec__30F848ED">
+          <End Type="DbContextHospital.Especialidad" Role="Especialidad" Multiplicity="1" />
+          <End Type="DbContextHospital.Doctor" Role="Doctor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especialidad">
+              <PropertyRef Name="ID_Especialidad" />
+            </Principal>
+            <Dependent Role="Doctor">
+              <PropertyRef Name="ID_Especialidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Factura__ID_Meto__33D4B598">
+          <End Type="DbContextHospital.MetodoPago" Role="MetodoPago" Multiplicity="1" />
+          <End Type="DbContextHospital.Factura" Role="Factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MetodoPago">
+              <PropertyRef Name="ID_MetodoPago" />
+            </Principal>
+            <Dependent Role="Factura">
+              <PropertyRef Name="ID_MetodoPago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -109,6 +241,38 @@
                 <ScalarProperty Name="Apellido" ColumnName="Apellido" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="ID_Paciente" ColumnName="ID_Paciente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Especialidads">
+            <EntityTypeMapping TypeName="DbContextHospital.Especialidad">
+              <MappingFragment StoreEntitySet="Especialidad">
+                <ScalarProperty Name="Nombre_Especialidad" ColumnName="Nombre_Especialidad" />
+                <ScalarProperty Name="ID_Especialidad" ColumnName="ID_Especialidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Facturas">
+            <EntityTypeMapping TypeName="DbContextHospital.Factura">
+              <MappingFragment StoreEntitySet="Factura">
+                <ScalarProperty Name="PrecioTotal" ColumnName="PrecioTotal" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="Tax" ColumnName="Tax" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
+                <ScalarProperty Name="Articulo" ColumnName="Articulo" />
+                <ScalarProperty Name="ID_MetodoPago" ColumnName="ID_MetodoPago" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="ID_factura" ColumnName="ID_factura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MetodoPagoes">
+            <EntityTypeMapping TypeName="DbContextHospital.MetodoPago">
+              <MappingFragment StoreEntitySet="MetodoPago">
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="ID_MetodoPago" ColumnName="ID_MetodoPago" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
